@@ -579,6 +579,7 @@ c_flags := $(KBUILD_CFLAGS) $(cpp_flags)
 head-y := $(CPUDIR)/start.o
 head-$(CONFIG_4xx) += arch/powerpc/cpu/ppc4xx/resetvec.o
 head-$(CONFIG_MPC85xx) += arch/powerpc/cpu/mpc85xx/resetvec.o
+head-$(CONFIG_X86_RESET_VECTOR) += arch/x86/cpu/resetvec.o arch/x86/cpu/start16.o
 
 HAVE_VENDOR_COMMON_LIB = $(if $(wildcard $(srctree)/board/$(VENDOR)/common/Makefile),y,n)
 
