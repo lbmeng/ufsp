@@ -46,12 +46,11 @@
 /*-----------------------------------------------------------------------
  * PCI configuration
  */
-#undef CONFIG_PCI
+#define CONFIG_PCI
+#define CONFIG_PCI_PNP
 
 /* SATA AHCI storage */
-#ifdef CONFIG_PCI
 #define CONFIG_SCSI_AHCI
-#endif
 
 #ifdef CONFIG_SCSI_AHCI
 #define CONFIG_LIBATA
@@ -144,9 +143,7 @@
 #define CONFIG_SYS_CONSOLE_INFO_QUIET
 
 /* x86 GPIOs are accessed through a PCI device */
-#ifdef CONFIG_PCI
 #define  CONFIG_INTEL_ICH6_GPIO
-#endif
 
 /*-----------------------------------------------------------------------
  * Command line configuration.
@@ -266,13 +263,11 @@
 /*-----------------------------------------------------------------------
  * FLASH configuration
  */
-#ifdef CONFIG_PCI
 #define CONFIG_ICH_SPI
 #define CONFIG_SPI_FLASH
 #define CONFIG_SPI_FLASH_MACRONIX
 #define CONFIG_SPI_FLASH_WINBOND
 #define CONFIG_SPI_FLASH_GIGADEVICE
-#endif /* CONFIG_PCI */
 #define CONFIG_SYS_NO_FLASH
 #ifdef CONFIG_ICH_SPI
 #define CONFIG_CMD_SF
@@ -291,7 +286,6 @@
 /*-----------------------------------------------------------------------
  * USB configuration
  */
-#ifdef CONFIG_PCI
 #define CONFIG_USB_EHCI
 #define CONFIG_USB_EHCI_PCI
 #define CONFIG_SYS_USB_EHCI_MAX_ROOT_PORTS     12
@@ -305,7 +299,6 @@
 #define CONFIG_USB_ETHER_SMSC95XX
 
 #define CONFIG_CMD_USB
-#endif /* CONFIG_PCI */
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	CONFIG_STD_DEVICES_SETTINGS
