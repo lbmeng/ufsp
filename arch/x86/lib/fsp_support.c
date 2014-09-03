@@ -28,9 +28,8 @@ are permitted provided that the following conditions are met:
 
 **/
 
-#include <types.h>
-#include <string.h>
-#include "fsp_support.h"
+#include <common.h>
+#include <asm/fsp/fsp_support.h>
 
 
 /**
