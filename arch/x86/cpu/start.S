@@ -70,6 +70,17 @@ early_board_init_ret:
 	jmp	car_init
 .globl car_init_ret
 car_init_ret:
+#ifdef CONFIG_INTEL_FSP
+	/*
+	 * The FSP initializes the ECX and EDX registers to point to
+	 * a temporary but writable memory range (Cache-As-RAM).
+	 * ECX points to the start of this temporary memory range and
+	 * EDX points to the end of this range.
+	 */
+
+	 /* stack grows down from top of CAR */
+	 movl	%edx, %esp
+#else
 	/*
 	 * We now have CONFIG_SYS_CAR_SIZE bytes of Cache-As-RAM (or SRAM,
 	 * or fully initialised SDRAM - we really don't care which)
@@ -78,6 +89,7 @@ car_init_ret:
 
 	/* Stack grows down from top of CAR */
 	movl	$(CONFIG_SYS_CAR_ADDR + CONFIG_SYS_CAR_SIZE), %esp
+#endif
 
 	/* Reserve space on stack for global data */
 	subl	$GENERATED_GBL_DATA_SIZE, %esp
