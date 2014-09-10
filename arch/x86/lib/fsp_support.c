@@ -224,7 +224,6 @@ FindFspHeader (
   @retval Never returns
 
 **/
-#ifdef __PRE_RAM__
 VOID
 BlContinuationFunc (
   SHARED_DATA *SharedData,
@@ -347,8 +346,6 @@ FspInitWrapper (
   ASSERT (FALSE);
 }
 
-#else
-
 /**
   FSP notification wrapper function. Calls into FSP code to perform platform 
   initialization
@@ -387,8 +384,6 @@ FspNotifyWrapper (
   Status = NotifyPhaseProc (&NotifyPhaseParams);
   return Status;
 }
-
-#endif  /* __PRE_RAM__ */
 
 /**
   This function retrieves the top of usable low memory.
