@@ -329,11 +329,11 @@ FspInitWrapper (
     "call	   *%%eax;"
     ".global AsmContinuation;"
     "AsmContinuation:;"
-    "popl	    %%eax;" /* pop  out return address  */
-    "pushl	  %%ecx;" /* push SharedData pointer  */
-    "pushl	  %%eax;" /* push back return address */
+    "movl	  %%ebx, %%eax;"    /* 1st parameter SharedData pointer */
+    "movl	  4(%%esp), %%edx;" /* 2nd parameter Status */
+    "movl	  8(%%esp), %%ecx;" /* 3rd parameter HobList pointer */
     "jmp	  BlContinuationFunc;"
-    :  : "m"(FspInitParamsPtr), "a"(FspInitApi), "c"(&SharedData)
+    :  : "m"(FspInitParamsPtr), "a"(FspInitApi), "b"(&SharedData)
   );
 
   /*
