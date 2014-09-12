@@ -78,8 +78,15 @@ car_init_ret:
 	 * EDX points to the end of this range.
 	 */
 
-	 /* stack grows down from top of CAR */
-	 movl	%edx, %esp
+	/* stack grows down from top of CAR */
+	movl	%edx, %esp
+
+	movl	$CONFIG_FSP_TEMP_RAM_ADDR, %eax
+	xorl	%edx, %edx
+	xorl	%ecx, %ecx
+	call	FspInitWrapper
+
+fsp_init_done:
 #else
 	/*
 	 * We now have CONFIG_SYS_CAR_SIZE bytes of Cache-As-RAM (or SRAM,
@@ -114,7 +121,15 @@ car_init_ret:
 
 	/* Set parameter to board_init_f() to boot flags */
 	xorl	%eax, %eax
+#ifdef CONFIG_INTEL_FSP
+	/*
+	 * Initialize boot flags to something meaningful
+	 * Note: EBX content is corrupted through the FspInit call
+	 */
+	movl	$GD_FLG_COLD_BOOT, %eax
+#else
 	movw	%bx, %ax
+#endif
 
 	/* Enter, U-boot! */
 	call	board_init_f
@@ -174,6 +189,13 @@ die:
 	hlt
 	jmp	die
 	hlt
+
+#ifdef CONFIG_INTEL_FSP
+.globl bl_main_continue 
+.type bl_main_continue, @function
+bl_main_continue:
+	jmp	fsp_init_done
+#endif
 
 blank_idt_ptr:
 	.word	0		/* limit */
