@@ -17,6 +17,7 @@
 #
 
 obj-$(CONFIG_SYS_QUEENSBAY) += tnc_car.o
+obj-$(CONFIG_SYS_QUEENSBAY) += tnc_cmc.o
 obj-$(CONFIG_SYS_QUEENSBAY) += tnc_dram.o
 obj-$(CONFIG_SYS_QUEENSBAY) += tnc_ucode.o
 obj-$(CONFIG_SYS_QUEENSBAY) += tnc.o
