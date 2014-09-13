@@ -60,6 +60,11 @@ SECTIONS
 		__bss_end = .;
 	}
 
+	. = CONFIG_CMC_LOCATION;	/* Location of CMC in flash */
+	__cmc_start = .;
+	.cmc  : { KEEP(*(.cmc*)); }
+	__cmc_end = .;
+
 	. = CONFIG_FSP_LOCATION;	/* Location of FSP in flash */
 	__fsp_start = .;
 	.fsp  : { KEEP(*(.fsp*)); }
