@@ -8,8 +8,10 @@
 /*
  * CPU microcode for Tunnel Creek
  * To be loaded by FSP TempRamInitEntry()
+ *
+ * Note the microcode will be put in the section .ucode
  */
 
-unsigned int ucode_base[] = {
+__attribute__ ((section(".ucode"))) unsigned int ucode[] = {
 #include <asm/arch-queensbay/M0220661105.h>
 };

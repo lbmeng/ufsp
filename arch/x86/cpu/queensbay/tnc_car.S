@@ -56,7 +56,7 @@ temp_ram_init_stack:
 	.long	temp_ram_init_ret
 	.long	temp_ram_init_params
 temp_ram_init_params:
-	.long	ucode_base		/* microcode base */
-	.long	UCODE_SIZE		/* microcode size */
+	.long	__ucode_start		/* microcode base */
+	.long	__ucode_size		/* microcode size */
 	.long	CONFIG_SYS_MONITOR_BASE	/* code region base */
 	.long	CONFIG_SYS_MONITOR_LEN	/* code region size */
