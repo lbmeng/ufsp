@@ -60,6 +60,11 @@ SECTIONS
 		__bss_end = .;
 	}
 
+	__ucode_start = .;		/* Location of UCODE in flash */
+	.ucode  : { KEEP(*(.ucode)); }
+	__ucode_end = .;
+	__ucode_size = SIZEOF(.ucode);
+
 	. = CONFIG_CMC_LOCATION;	/* Location of CMC in flash */
 	__cmc_start = .;
 	.cmc  : { KEEP(*(.cmc*)); }
