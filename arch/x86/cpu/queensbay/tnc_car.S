@@ -10,7 +10,6 @@
  */
 
 #include <config.h>
-#include <asm/arch-queensbay/tnc_ucode.h>
 
 .globl car_init
 car_init:
