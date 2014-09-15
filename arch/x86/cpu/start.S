@@ -150,13 +150,11 @@ fsp_init_done:
 
 	/* Set parameter to board_init_f() to boot flags */
 	xorl	%eax, %eax
-#ifdef CONFIG_INTEL_FSP
+#ifndef CONFIG_INTEL_FSP
 	/*
-	 * Initialize boot flags to something meaningful
-	 * Note: EBX content is corrupted through the FspInit call
+	 * EBX content is already corrupted through the FspInit call,
+	 * thus its validity only applies to the non-FSP configuration
 	 */
-	movl	$GD_FLG_COLD_BOOT, %eax
-#else
 	movw	%bx, %ax
 #endif
 
