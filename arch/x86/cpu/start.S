@@ -87,6 +87,15 @@ car_init_ret:
 	call	FspInitWrapper
 
 fsp_init_done:
+#ifdef CONFIG_INTEL_FSP
+	/*
+	 * We come here from bl_main_continue with two parameters:
+	 * - EAX: HobList pointer, EDX: SharedData pointer
+	 * Save them to ESI/EDI accordingly
+	 */
+	movl	%eax, %esi
+	movl	%edx, %edi
+#endif
 #else
 	/*
 	 * We now have CONFIG_SYS_CAR_SIZE bytes of Cache-As-RAM (or SRAM,
@@ -100,6 +109,26 @@ fsp_init_done:
 
 	/* Reserve space on stack for global data */
 	subl	$GENERATED_GBL_DATA_SIZE, %esp
+
+#ifdef CONFIG_INTEL_FSP
+	/*
+	 * Save ESI/EDI to global data for future reference
+	 * Note they are the last two elements of the gd structure.
+	 *
+	 * Before saving, the gd structure space on the stack needs
+	 * to be cleared as there are already some garbage in place
+	 * before calling bl_main_continue(). 
+	 */
+
+	movl	%esp, %eax
+	xorl	%edx, %edx
+	movl	$GENERATED_GBL_DATA_SIZE, %ecx
+	call	memset
+	
+	movl	$GD_SIZE, %ecx
+	movl	%edi, -4(%esp, %ecx, 1)
+	movl	%esi, -8(%esp, %ecx, 1)
+#endif
 
 	/* Align global data to 16-byte boundary */
 	andl	$0xfffffff0, %esp

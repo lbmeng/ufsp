@@ -17,6 +17,10 @@ struct arch_global_data {
 	uint32_t tsc_base_kclocks;	/* Initial tsc as a kclocks value */
 	uint32_t tsc_prev;		/* For show_boot_progress() */
 	void *new_fdt;			/* Relocated FDT */
+#ifdef CONFIG_INTEL_FSP
+	void *hob_list;
+	void *shared_data;
+#endif
 };
 
 #endif
