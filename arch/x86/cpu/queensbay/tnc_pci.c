@@ -15,11 +15,14 @@
 #include <common.h>
 #include <pci.h>
 #include <asm/pci.h>
+#include <asm/fsp/fsp_support.h>
 
 static struct pci_controller tnc_hose;
 
 void pci_init_board(void)
 {
+	EFI_STATUS status;
+
 	tnc_hose.first_busno = 0;
 	tnc_hose.last_busno = 0xff;
 
@@ -32,4 +35,11 @@ void pci_init_board(void)
 	pci_register_hose(&tnc_hose);
 
 	tnc_hose.last_busno = pci_hose_scan(&tnc_hose);
+
+	/* call into FspNotify */
+	printf("Calling into FSP (notify phase EnumInitPhaseAfterPciEnumeration): ");
+	if ((status = FspNotifyWrapper(NULL, EnumInitPhaseAfterPciEnumeration)) != FSP_SUCCESS)
+		printf("fail, error code %x\n", status);
+	else
+		printf("OK\n");
 }
