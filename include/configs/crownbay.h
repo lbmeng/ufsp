@@ -154,6 +154,8 @@
  */
 #include <config_cmd_default.h>
 
+#define CONFIG_CMD_HOB
+
 #define CONFIG_TRACE
 #define CONFIG_CMD_TRACE
 #define CONFIG_TRACE_BUFFER_SIZE	(16 << 20)
