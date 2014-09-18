@@ -12,6 +12,7 @@
  */
 
 #include <common.h>
+#include <asm/fsp/fsp_support.h>
 
 #define CROWNBAY_DRAM_SIZE	(1024 * 1024 * 1024)
 
@@ -27,4 +28,9 @@ int dram_init_f(void)
 int dram_init_r(void)
 {
 	return 0;
+}
+
+ulong board_get_usable_ram_top(ulong total_size)
+{
+	return GetUsableLowMemTop(gd->arch.hob_list);
 }
