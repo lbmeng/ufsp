@@ -364,6 +364,7 @@ FspNotifyWrapper (
 {
   FSP_NOTFY_PHASE       NotifyPhaseProc;
   NOTIFY_PHASE_PARAMS   NotifyPhaseParams;
+  NOTIFY_PHASE_PARAMS  *NotifyPhaseParamsPtr;
   EFI_STATUS            Status;
   FSP_INFO_HEADER       *FspHeader;
 
@@ -381,7 +382,18 @@ FspNotifyWrapper (
 
   NotifyPhaseProc = (FSP_NOTFY_PHASE)(FspHeader->ImageBase + FspHeader->NotifyPhaseEntry);
   NotifyPhaseParams.Phase = Phase;
-  Status = NotifyPhaseProc (&NotifyPhaseParams);
+  NotifyPhaseParamsPtr = &NotifyPhaseParams;
+
+  /*
+   * Use ASM code to ensure correct parameter is on the stack for FspNotify
+   * as U-Boot is using different ABI from FSP
+   */
+  asm volatile (
+    "pushl	%1;"		/* push notify phase */
+    "call	*%%eax;"	/* call FspNotify */
+    "addl	$4, %%esp;"	/* clean up the stack */
+    : "=a"(Status) : "m"(NotifyPhaseParamsPtr), "a"(NotifyPhaseProc)
+  );
   return Status;
 }
 
