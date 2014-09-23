@@ -392,7 +392,7 @@ FspNotifyWrapper (
     "pushl	%1;"		/* push notify phase */
     "call	*%%eax;"	/* call FspNotify */
     "addl	$4, %%esp;"	/* clean up the stack */
-    : "=a"(Status) : "m"(NotifyPhaseParamsPtr), "a"(NotifyPhaseProc)
+    : "=a"(Status) : "m"(NotifyPhaseParamsPtr), "a"(NotifyPhaseProc), "m"(*NotifyPhaseParamsPtr)
   );
   return Status;
 }
