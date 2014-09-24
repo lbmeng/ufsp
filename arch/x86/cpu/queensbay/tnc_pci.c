@@ -26,8 +26,8 @@ void pci_init_board(void)
 	tnc_hose.first_busno = 0;
 	tnc_hose.last_busno = 0xff;
 
-	pci_set_region(tnc_hose.regions + 0, 0x0, 0x0, 0xffffffff,
-		PCI_REGION_MEM);
+	pci_set_region(tnc_hose.regions + 0, CONFIG_SYS_PCI_MEM_BUS, CONFIG_SYS_PCI_MEM_PHYS,
+		CONFIG_SYS_PCI_MEM_SIZE, PCI_REGION_MEM);
 	tnc_hose.region_count = 1;
 
 	pci_setup_type1(&tnc_hose);
