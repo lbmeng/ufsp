@@ -39,12 +39,16 @@ u64 __attribute__((no_instrument_function)) get_ticks(void)
 /* Get the speed of the TSC timer in MHz */
 unsigned __attribute__((no_instrument_function)) long get_tbclk_mhz(void)
 {
+#ifdef CONFIG_SYS_X86_TSC_FREQ_MHZ
+	return CONFIG_SYS_X86_TSC_FREQ_MHZ;
+#else
 	u32 ratio;
 	u64 platform_info = native_read_msr(PLATFORM_INFO_MSR);
 
 	/* 100MHz times Max Non Turbo ratio */
 	ratio = (platform_info >> 8) & 0xff;
 	return 100 * ratio;
+#endif
 }
 
 unsigned long get_tbclk(void)
