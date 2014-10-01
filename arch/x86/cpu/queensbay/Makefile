@@ -21,5 +21,6 @@ obj-$(CONFIG_SYS_QUEENSBAY) += tnc_cmc.o
 obj-$(CONFIG_SYS_QUEENSBAY) += tnc_dram.o
 obj-$(CONFIG_SYS_QUEENSBAY) += tnc_ucode.o
 obj-$(CONFIG_SYS_QUEENSBAY) += tnc.o
+obj-$(CONFIG_SYS_QUEENSBAY) += topcliff.o
 obj-$(CONFIG_SYS_QUEENSBAY) += fsp_fw.o
 obj-$(CONFIG_PCI) += tnc_pci.o
