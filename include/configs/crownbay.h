@@ -316,4 +316,7 @@
 #define CONFIG_MMC_SDMA
 #define CONFIG_CMD_MMC
 
+/* CPU INFO */
+#define CONFIG_DISPLAY_CPUINFO
+
 #endif	/* __CONFIG_H */
