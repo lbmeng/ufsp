@@ -7,6 +7,7 @@
 
 obj-$(CONFIG_CMD_BOOTM) += bootm.o
 obj-y	+= cmd_boot.o
+obj-y	+= cpu.o
 obj-$(CONFIG_INTEL_FSP)	+= fsp_configs.o fsp_support.o
 obj-y	+= gcc.o
 obj-y	+= init_helpers.o
