@@ -22,9 +22,14 @@
 #ifndef __platform_h
 #define __platform_h
 
-#undef PROCESSOR_DETECTED
-#undef COMPILER_DETECTED
-#undef OS_DETECTED
+#define PROCESSOR_DETECTED
+#define TARGET_CPU_X86
+
+#define COMPILER_DETECTED
+#define TARGET_COMPILER_GCC
+
+#define OS_DETECTED
+#define TARGET_OS_UBOOT
 
 /* ------------------- *
 * PROCESSOR DETECTION *
