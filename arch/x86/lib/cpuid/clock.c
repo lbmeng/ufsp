@@ -22,11 +22,16 @@
 #include "prefix.h"
 #include "clock.h"
 
+#ifdef TARGET_OS_UBOOT
+#include <common.h>
+#else
 #include <math.h>
 #include <time.h>
+#endif
 
 static uint32_t cycles_per_usec;
 
+#ifdef TARGET_OS_UBOOT
 static uint64_t wallclock_ns(void)
 {
 	struct timespec ts;
@@ -93,6 +98,7 @@ static void calibrate_cpu_clock(void)
 
 	cycles_per_usec = avg;
 }
+#endif /* TARGET_OS_UBOOT */
 
 uint64_t cpu_clock_to_wall(uint64_t clock)
 {
@@ -103,5 +109,9 @@ uint64_t cpu_clock_to_wall(uint64_t clock)
 
 void init_cpu_clock(void)
 {
+#ifdef TARGET_OS_UBOOT
+	cycles_per_usec = 1000000; /* temp hack for u-boot port */
+#else
 	calibrate_cpu_clock();
+#endif
 }
