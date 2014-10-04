@@ -23,12 +23,18 @@
 
 #include "util.h"
 
+#ifdef TARGET_OS_UBOOT
+#include <common.h>
+#include <linux/ctype.h>
+#define CHAR_BIT	8
+#else
 #include <ctype.h>
 #include <limits.h>
 #ifdef TARGET_OS_WINDOWS
 #include <windows.h>
 #else
 #include <sys/time.h>
+#endif
 #endif
 
 uint32_t popcnt(uint32_t v)
@@ -76,6 +82,7 @@ void squeeze(char *str)
 	str[w] = 0;
 }
 
+#ifndef TARGET_OS_UBOOT
 double time_sec(void)
 {
 #ifdef TARGET_OS_WINDOWS
@@ -89,3 +96,4 @@ double time_sec(void)
 	return (double)tv.tv_sec + ((double)tv.tv_usec / 1000000.0);
 #endif
 }
+#endif

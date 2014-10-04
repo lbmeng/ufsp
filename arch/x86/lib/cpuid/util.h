@@ -25,6 +25,8 @@
 uint32_t popcnt(uint32_t v);
 uint32_t count_trailing_zero_bits(uint32_t v);
 void squeeze(char *str);
+#ifndef TARGET_OS_UBOOT
 double time_sec(void);
+#endif
 
 #endif
