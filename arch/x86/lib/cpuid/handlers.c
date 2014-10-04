@@ -27,8 +27,12 @@
 #include "state.h"
 #include "util.h"
 
+#ifdef TARGET_OS_UBOOT
+#include <common.h>
+#else
 #include <stdio.h>
 #include <string.h>
+#endif
 
 void handle_features(struct cpu_regs_t *regs, struct cpuid_state_t *state);
 

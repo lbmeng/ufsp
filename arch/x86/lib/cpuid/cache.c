@@ -24,9 +24,13 @@
 #include "cache.h"
 #include "state.h"
 
+#ifdef TARGET_OS_UBOOT
+#include <common.h>
+#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#endif
 
 typedef enum {
 	DATA_TLB,

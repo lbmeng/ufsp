@@ -24,8 +24,12 @@
 #include "feature.h"
 #include "state.h"
 
+#ifdef TARGET_OS_UBOOT
+#include <common.h>
+#else
 #include <stdio.h>
 #include <string.h>
+#endif
 
 typedef enum
 {
