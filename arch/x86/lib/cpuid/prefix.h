@@ -28,10 +28,14 @@
 #define _GNU_SOURCE
 #endif
 
+#ifdef TARGET_OS_UBOOT
+#include <common.h>
+#else
 #include <assert.h>
 #include <stdint.h>
 #include <inttypes.h>
 #include <stdlib.h>
+#endif
 
 #ifdef _MSC_VER
 /* MSVC doesn't actually support most of C99, but we define
