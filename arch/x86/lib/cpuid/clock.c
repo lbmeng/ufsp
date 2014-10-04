@@ -31,7 +31,7 @@
 
 static uint32_t cycles_per_usec;
 
-#ifdef TARGET_OS_UBOOT
+#ifndef TARGET_OS_UBOOT
 static uint64_t wallclock_ns(void)
 {
 	struct timespec ts;
