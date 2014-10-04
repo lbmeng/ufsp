@@ -23,6 +23,9 @@
 
 #include "state.h"
 
+#ifdef TARGET_OS_UBOOT
+#include <common.h>
+#else
 #include <stdio.h>
 #include <string.h>
 #ifdef __linux__
@@ -33,6 +36,7 @@
 #ifdef TARGET_COMPILER_MSVC
 #ifdef TARGET_CPU_X86_64
 #include <intrin.h>
+#endif
 #endif
 #endif
 
@@ -161,6 +165,7 @@ BOOL cpuid(uint32_t *_eax, uint32_t *_ebx, uint32_t *_ecx, uint32_t *_edx)
 
 #endif
 
+#ifndef TARGET_OS_UBOOT
 #ifdef __linux__
 BOOL cpuid_kernel(struct cpu_regs_t *regs, struct cpuid_state_t *state)
 {
@@ -204,6 +209,7 @@ out:
 	return ret;
 }
 #endif
+#endif
 
 BOOL cpuid_native(struct cpu_regs_t *regs, struct cpuid_state_t *state)
 {
@@ -211,6 +217,7 @@ BOOL cpuid_native(struct cpu_regs_t *regs, struct cpuid_state_t *state)
 	return cpuid(&regs->eax, &regs->ebx, &regs->ecx, &regs->edx);
 }
 
+#ifndef TARGET_OS_UBOOT
 BOOL cpuid_load_from_file(const char *filename, struct cpuid_state_t *state)
 {
 	struct cpuid_leaf_t *leaf;
@@ -388,6 +395,7 @@ fail:
 
 	return FALSE;
 }
+#endif
 
 BOOL cpuid_stub(struct cpu_regs_t *regs, struct cpuid_state_t *state)
 {
