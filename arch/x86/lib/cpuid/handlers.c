@@ -29,6 +29,7 @@
 
 #ifdef TARGET_OS_UBOOT
 #include <common.h>
+#include <malloc.h>
 #else
 #include <stdio.h>
 #include <string.h>
@@ -642,7 +643,11 @@ void handle_std_x2apic(struct cpu_regs_t *regs, struct cpuid_state_t *state)
 	struct x2apic_prop_t socket, core, thread;
 
 	uint32_t i, id = 0;
+#ifdef TARGET_OS_UBOOT
+	uint32_t total_logical = 0; 
+#else
 	uint32_t total_logical = state->thread_count(state);
+#endif
 
 	if ((state->vendor & VENDOR_INTEL) == 0)
 		return;
