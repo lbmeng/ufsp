@@ -66,7 +66,9 @@
 #endif
 
 #ifndef C99
+#ifndef inline
 #define inline
+#endif
 #endif
 
 #ifndef __unused_variable
