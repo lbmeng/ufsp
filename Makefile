@@ -591,6 +591,7 @@ libs-y += $(CPUDIR)/$(SOC)/
 endif
 libs-$(CONFIG_OF_EMBED) += dts/
 libs-y += arch/$(ARCH)/lib/
+libs-$(CONFIG_X86) += arch/x86/lib/cpuid/
 libs-y += fs/
 libs-y += net/
 libs-y += disk/
