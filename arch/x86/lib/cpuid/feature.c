@@ -396,7 +396,11 @@ void print_features(struct cpu_regs_t *regs, struct cpuid_state_t *state)
 			reg = &regs->edx;
 			break;
 		default:
+#ifdef TARGET_OS_UBOOT
+			break;
+#else
 			abort();
+#endif
 		}
 
 		if (ignore_vendor) {

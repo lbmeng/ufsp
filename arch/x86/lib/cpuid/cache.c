@@ -26,6 +26,7 @@
 
 #ifdef TARGET_OS_UBOOT
 #include <common.h>
+#include <malloc.h>
 #else
 #include <stdio.h>
 #include <stdlib.h>
@@ -218,7 +219,11 @@ static const char *page_types(uint32_t attrs)
 	case PAGES_4K | PAGES_2M | PAGES_4M:
 		return "4KB, 2MB, or 4MB pages";
 	default:
+#ifdef TARGET_OS_UBOOT
+		return NULL;
+#else
 		abort();
+#endif
 	}
 #ifdef _MSC_VER
 	/* Visual C++ isn't bright enough to figure out that
@@ -288,7 +293,11 @@ static char *create_description(const struct cache_desc_index_t *idx)
 		strcat(buffer, "L3 ");
 		break;
 	default:
+#ifdef TARGET_OS_UBOOT
+		break;
+#else
 		abort();
+#endif
 	}
 
 	switch (desc->type) {
@@ -319,7 +328,11 @@ static char *create_description(const struct cache_desc_index_t *idx)
 		strcat(buffer, size(temp, desc->size));
 		break;
 	default:
+#ifdef TARGET_OS_UBOOT
+		break;
+#else
 		abort();
+#endif
 	}
 
 	cp = page_types(desc->attrs);
