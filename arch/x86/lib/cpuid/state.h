@@ -44,8 +44,10 @@ struct cpuid_leaf_t {
 
 struct cpuid_state_t
 {
+#ifndef TARGET_OS_UBOOT
 	thread_bind_handler_t thread_bind;
 	thread_count_handler_t thread_count;
+#endif
 	cpuid_call_handler_t cpuid_call;
 	cpuid_print_handler_t cpuid_print;
 
@@ -61,6 +63,13 @@ struct cpuid_state_t
 	char procname[48];
 };
 
+#ifdef TARGET_OS_UBOOT
+#define INIT_CPUID_STATE(x) { \
+	memset((x), 0, sizeof(struct cpuid_state_t)); \
+	(x)->cpuid_print = cpuid_dump_normal; \
+	(x)->cpuid_call = cpuid_native; \
+	}
+#else
 #define INIT_CPUID_STATE(x) { \
 	memset((x), 0, sizeof(struct cpuid_state_t)); \
 	(x)->cpuid_print = cpuid_dump_normal; \
@@ -68,6 +77,7 @@ struct cpuid_state_t
 	(x)->thread_bind = thread_bind_native; \
 	(x)->thread_count = thread_count_native; \
 	}
+#endif
 
 #define FREE_CPUID_STATE(x) { \
 	if ((x)->cpuid_leaves) \
