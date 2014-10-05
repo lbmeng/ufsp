@@ -19,10 +19,10 @@
  *
  */
 
-#include "prefix.h"
+#include <asm/cpuid/prefix.h>
 
-#include "feature.h"
-#include "state.h"
+#include <asm/cpuid/feature.h>
+#include <asm/cpuid/state.h>
 
 #ifdef TARGET_OS_UBOOT
 #include <common.h>

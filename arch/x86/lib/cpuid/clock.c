@@ -19,8 +19,8 @@
  *
  */
 
-#include "prefix.h"
-#include "clock.h"
+#include <asm/cpuid/prefix.h>
+#include <asm/cpuid/clock.h>
 
 #ifdef TARGET_OS_UBOOT
 #include <common.h>

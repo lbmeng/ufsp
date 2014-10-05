@@ -19,13 +19,13 @@
  *
  */
 
-#include "prefix.h"
+#include <asm/cpuid/prefix.h>
 
-#include "cache.h"
-#include "feature.h"
-#include "handlers.h"
-#include "state.h"
-#include "util.h"
+#include <asm/cpuid/cache.h>
+#include <asm/cpuid/feature.h>
+#include <asm/cpuid/handlers.h>
+#include <asm/cpuid/state.h>
+#include <asm/cpuid/util.h>
 
 #ifdef TARGET_OS_UBOOT
 #include <common.h>
