@@ -25,11 +25,6 @@ int dram_init_f(void)
 	return 0;
 }
 
-int dram_init_r(void)
-{
-	return 0;
-}
-
 int dram_init_banksize(void)
 {
 	if (CONFIG_NR_DRAM_BANKS) {
