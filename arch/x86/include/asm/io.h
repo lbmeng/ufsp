@@ -246,4 +246,59 @@ static inline phys_addr_t virt_to_phys(void * vaddr)
 #define __iormb()	dmb()
 #define __iowmb()	dmb()
 
+/* Generic functions for pnp devices */
+
+#define PNP_DEV(PORT, FUNC) (((PORT) << 8) | (FUNC))
+
+static inline void pnp_write_config(uint32_t dev, uint8_t reg, uint8_t value)
+{
+	unsigned port = dev >> 8;
+	outb(reg, port);
+	outb(value, port + 1);
+}
+
+static inline uint8_t pnp_read_config(uint32_t dev, uint8_t reg)
+{
+	unsigned port = dev >> 8;
+	outb(reg, port);
+	return inb(port + 1);
+}
+
+static inline void pnp_set_logical_device(uint32_t dev)
+{
+	unsigned device = dev & 0xff;
+	pnp_write_config(dev, 0x07, device);
+}
+
+static inline void pnp_set_enable(uint32_t dev, int enable)
+{
+	pnp_write_config(dev, 0x30, enable ? 1 : 0);
+}
+
+static inline int pnp_read_enable(uint32_t dev)
+{
+	return !!pnp_read_config(dev, 0x30);
+}
+
+static inline void pnp_set_iobase(uint32_t dev, unsigned index, unsigned iobase)
+{
+	pnp_write_config(dev, index + 0, (iobase >> 8) & 0xff);
+	pnp_write_config(dev, index + 1, iobase & 0xff);
+}
+
+static inline uint16_t pnp_read_iobase(uint32_t dev, unsigned index)
+{
+	return ((uint16_t)(pnp_read_config(dev, index)) << 8) | pnp_read_config(dev, index + 1);
+}
+
+static inline void pnp_set_irq(uint32_t dev, unsigned index, unsigned irq)
+{
+	pnp_write_config(dev, index, irq);
+}
+
+static inline void pnp_set_drq(uint32_t dev, unsigned index, unsigned drq)
+{
+	pnp_write_config(dev, index, drq & 0xff);
+}
+
 #endif
