@@ -20,10 +20,15 @@
 #include <watchdog.h>
 #endif
 
+#define SERIAL_DEV PNP_DEV(0x2e, 4)
+
+extern void lpc47m_enable_serial(u16 dev, u16 iobase);
+
 DECLARE_GLOBAL_DATA_PTR;
 
 int board_early_init_f(void)
 {
+	lpc47m_enable_serial(SERIAL_DEV, UART0_BASE);
 	return 0;
 }
 
