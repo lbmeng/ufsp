@@ -321,5 +321,6 @@
 
 /* SuperIO */
 #define CONFIG_SMSC_LPC47M
+#define CONFIG_BOARD_EARLY_INIT_F
 
 #endif	/* __CONFIG_H */
