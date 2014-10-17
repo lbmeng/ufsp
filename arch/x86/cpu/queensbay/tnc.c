@@ -10,9 +10,6 @@
  */
 
 #include <common.h>
-#include <asm/u-boot-x86.h>
-#include <asm/msr.h>
-#include <asm/cache.h>
 #include <asm/io.h>
 
 /*
@@ -24,4 +21,10 @@ int cpu_init_f(void)
 	timer_set_base(10);
 
 	return x86_cpu_init_f();
+}
+
+void reset_cpu(ulong addr)
+{
+	/* cold reset */
+	outb(0x06, 0xcf9);
 }
