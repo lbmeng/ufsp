@@ -87,7 +87,7 @@ const struct spi_flash_params spi_flash_params_table[] = {
 #ifdef CONFIG_SPI_FLASH_SST		/* SST */
 	{"SST25VF040B",	   0xbf258d, 0x0,	64 * 1024,     8,	0,          SECT_4K | SST_WP},
 	{"SST25VF080B",	   0xbf258e, 0x0,	64 * 1024,    16,	0,	    SECT_4K | SST_WP},
-	{"SST25VF016B",	   0xbf2541, 0x0,	64 * 1024,    32,	0,	    SECT_4K | SST_WP},
+	{"SST25VF016B",	   0xbf2541, 0x0,	64 * 1024,    32, ARRAY_SLOW,	    SECT_4K | SST_WP},
 	{"SST25VF032B",	   0xbf254a, 0x0,	64 * 1024,    64,	0,	    SECT_4K | SST_WP},
 	{"SST25VF064C",	   0xbf254b, 0x0,	64 * 1024,   128,	0,		     SECT_4K},
 	{"SST25WF512",	   0xbf2501, 0x0,	64 * 1024,     1,	0,	    SECT_4K | SST_WP},

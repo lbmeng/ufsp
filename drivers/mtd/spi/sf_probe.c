@@ -187,7 +187,7 @@ static struct spi_flash *spi_flash_validate_params(struct spi_slave *spi,
 		flash->read_cmd = cmd;
 	} else {
 		/* Go for default supported read cmd */
-		flash->read_cmd = CMD_READ_ARRAY_SLOW;
+		flash->read_cmd = CMD_READ_ARRAY_FAST;
 	}
 
 	/* Not require to look for fastest only two write cmds yet */
