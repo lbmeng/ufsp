@@ -10,20 +10,23 @@
 
 #include <common.h>
 #include <command.h>
+#include <malloc.h>
 #include <asm/io.h>
 
 /*
  * IO Display
  *
  * Syntax:
- *	iod{.b, .w, .l} {addr}
+ *	iod{.b, .w, .l} {addr} {len}
  */
 int do_io_iod(cmd_tbl_t *cmdtp, int flag, int argc, char *const argv[])
 {
-	ulong addr;
+	ulong addr, length, bytes;
 	int size;
+	char *buf;
+	int i;
 
-	if (argc != 2)
+	if (argc < 2)
 		return CMD_RET_USAGE;
 
 	size = cmd_get_data_size(argv[0], 4);
@@ -32,14 +35,29 @@ int do_io_iod(cmd_tbl_t *cmdtp, int flag, int argc, char *const argv[])
 
 	addr = simple_strtoul(argv[1], NULL, 16);
 
-	printf("%04x: ", (u16) addr);
+	/* If another parameter, it is the length to display.
+	 * Length is the number of objects, not number of bytes.
+	 */
+	length = (argc > 2) ? simple_strtoul(argv[2], NULL, 16) : 64;
 
-	if (size == 4)
-		printf("%08x\n", inl(addr));
-	else if (size == 2)
-		printf("%04x\n", inw(addr));
-	else
-		printf("%02x\n", inb(addr));
+	bytes = size * length;
+	buf = malloc(bytes);
+	if (!buf)
+		return 1;
+
+	for (i = 0; i < bytes; i += size)
+	{
+		if (size == 4)
+			*(u32 *)&buf[i] = inl(addr + i);
+		else if (size == 2)
+			*(u16 *)&buf[i] = inw(addr + i);
+		else
+			*(u8 *)&buf[i] = inb(addr + i);
+	}
+
+	/* Print the lines. */
+	print_buffer(addr, buf, size, length, 0);
+	free(buf);
 
 	return 0;
 }
@@ -69,9 +87,9 @@ int do_io_iow(cmd_tbl_t *cmdtp, int flag, int argc, char *const argv[])
 }
 
 /**************************************************/
-U_BOOT_CMD(iod, 2, 0, do_io_iod,
+U_BOOT_CMD(iod, 3, 0, do_io_iod,
 	   "IO space display", "[.b, .w, .l] address [# of objects]");
 
 U_BOOT_CMD(iow, 3, 0, do_io_iow,
-	   "IO space modify (auto-incrementing address)",
+	   "IO space modify",
 	   "[.b, .w, .l] address");
