@@ -143,7 +143,7 @@ struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,
 
 	/* ICH 7 SPI controller only supports slow read command */
 	if (ctlr.ich_version == 7)
-		ich->slave.op_mode_rx = 1;
+		ich->slave.op_mode_rx = SPI_OPM_RX_AS;
 
 	return &ich->slave;
 }
