@@ -519,8 +519,8 @@ int sst_write_wp(struct spi_flash *flash, u32 offset, size_t len,
 int sst_write_bp(struct spi_flash *flash, u32 offset, size_t len,
 		const void *buf)
 {
+	size_t actual;
 	int ret;
-	int i;
 
 	ret = spi_claim_bus(flash->spi);
 	if (ret) {
@@ -528,8 +528,8 @@ int sst_write_bp(struct spi_flash *flash, u32 offset, size_t len,
 		return ret;
 	}
 
-	for (i = 0; i < len; i++) {
-		ret = sst_byte_write(flash, offset, buf + i);
+	for (actual = 0; actual < len; actual++) {
+		ret = sst_byte_write(flash, offset, buf + actual);
 		if (ret) {
 			debug("SF: sst byte program failed\n");
 			break;
@@ -546,7 +546,7 @@ int sst_write_bp(struct spi_flash *flash, u32 offset, size_t len,
 		ret = spi_flash_cmd_write_disable(flash);
 
 	debug("SF: sst: program %s %zu bytes @ 0x%zx\n",
-	      ret ? "failure" : "success", len, offset);
+	      ret ? "failure" : "success", len, offset - actual);
 
 	spi_release_bus(flash->spi);
 	return ret;
