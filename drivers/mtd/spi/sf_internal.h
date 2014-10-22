@@ -73,6 +73,8 @@
 
 int sst_write_wp(struct spi_flash *flash, u32 offset, size_t len,
 		const void *buf);
+int sst_write_bp(struct spi_flash *flash, u32 offset, size_t len,
+		const void *buf);
 #endif
 
 /* Send a single-byte command to the device and read the response */
