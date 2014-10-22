@@ -13,12 +13,8 @@
 
 #include <common.h>
 #include <asm/io.h>
-#include <net.h>
+#include <pci.h>
 #include <netdev.h>
-
-#ifdef CONFIG_HW_WATCHDOG
-#include <watchdog.h>
-#endif
 
 #define SERIAL_DEV PNP_DEV(0x2e, 4)
 
@@ -43,13 +39,6 @@ int board_early_init_r(void)
 	return 0;
 }
 
-#ifndef CONFIG_SYS_NO_FLASH
-ulong board_flash_get_legacy(ulong base, int banknum, flash_info_t *info)
-{
-	return 0;
-}
-#endif
-
 int board_eth_init(bd_t *bis)
 {
 	return pci_eth_init(bis);
@@ -62,6 +51,13 @@ int board_final_cleanup(void)
 
 int last_stage_init(void)
 {
+	u32 bc;
+
+	/* unprotect the whole SPI flash */
+	pci_read_config_dword (PCI_BDF (0, 31, 0), 0xd8, &bc);
+	bc |= 0x1;
+	pci_write_config_dword (PCI_BDF (0, 31, 0), 0xd8, bc);
+
 	printf("Intel Crown Bay CRB\n");
 	return 0;
 }
