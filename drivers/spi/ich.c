@@ -145,6 +145,8 @@ struct spi_slave *spi_setup_slave(unsigned int bus, unsigned int cs,
 	if (ctlr.ich_version == 7)
 		ich->slave.op_mode_rx = SPI_OPM_RX_AS;
 
+	ich->slave.op_mode_tx = SPI_OPM_TX_BP;
+
 	return &ich->slave;
 }
 
