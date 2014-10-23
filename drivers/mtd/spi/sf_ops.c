@@ -534,11 +534,6 @@ int sst_write_bp(struct spi_flash *flash, u32 offset, size_t len,
 			debug("SF: sst byte program failed\n");
 			break;
 		}
-
-		ret = spi_flash_cmd_wait_ready(flash, SPI_FLASH_PROG_TIMEOUT);
-		if (ret)
-			break;
-
 		offset++;
 	}
 
