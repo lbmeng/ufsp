@@ -138,9 +138,12 @@ static struct spi_flash *spi_flash_validate_params(struct spi_slave *spi,
 	/* Assign spi_flash ops */
 	flash->write = spi_flash_cmd_write_ops;
 #ifdef CONFIG_SPI_FLASH_SST
-	flash->write = sst_write_bp;
-	if (params->flags & SST_WP && flash->spi->op_mode_tx & SPI_OPM_TX_WP)
-		flash->write = sst_write_wp;
+	if (params->flags & SST_WP) {
+		if (flash->spi->op_mode_tx & SPI_OPM_TX_BP)
+			flash->write = sst_write_bp;
+		else
+			flash->write = sst_write_wp;
+	}
 #endif
 	flash->erase = spi_flash_cmd_erase_ops;
 	flash->read = spi_flash_cmd_read_ops;
