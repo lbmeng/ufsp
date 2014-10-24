@@ -85,16 +85,16 @@ const struct spi_flash_params spi_flash_params_table[] = {
 	{"N25Q1024A",	   0x20bb21, 0x0,       64 * 1024,  2048, RD_FULL, WR_QPP | E_FSR | SECT_4K},
 #endif
 #ifdef CONFIG_SPI_FLASH_SST		/* SST */
-	{"SST25VF040B",	   0xbf258d, 0x0,	64 * 1024,     8,	0,          SECT_4K | SST_WP},
-	{"SST25VF080B",	   0xbf258e, 0x0,	64 * 1024,    16,	0,	    SECT_4K | SST_WP},
-	{"SST25VF016B",	   0xbf2541, 0x0,	64 * 1024,    32, ARRAY_SLOW,	    SECT_4K | SST_WP},
-	{"SST25VF032B",	   0xbf254a, 0x0,	64 * 1024,    64,	0,	    SECT_4K | SST_WP},
-	{"SST25VF064C",	   0xbf254b, 0x0,	64 * 1024,   128,	0,		     SECT_4K},
-	{"SST25WF512",	   0xbf2501, 0x0,	64 * 1024,     1,	0,	    SECT_4K | SST_WP},
-	{"SST25WF010",	   0xbf2502, 0x0,	64 * 1024,     2,       0,          SECT_4K | SST_WP},
-	{"SST25WF020",	   0xbf2503, 0x0,	64 * 1024,     4,       0,	    SECT_4K | SST_WP},
-	{"SST25WF040",	   0xbf2504, 0x0,	64 * 1024,     8,       0,	    SECT_4K | SST_WP},
-	{"SST25WF080",	   0xbf2505, 0x0,	64 * 1024,    16,       0,	    SECT_4K | SST_WP},
+	{"SST25VF040B",	   0xbf258d, 0x0,	 4 * 1024,   128, RD_SLOW,	    SECT_4K | SST_WP},
+	{"SST25VF080B",	   0xbf258e, 0x0,	 4 * 1024,   256, RD_SLOW,	    SECT_4K | SST_WP},
+	{"SST25VF016B",	   0xbf2541, 0x0,	 4 * 1024,   512, RD_SLOW,	    SECT_4K | SST_WP},
+	{"SST25VF032B",	   0xbf254a, 0x0,	 4 * 1024,  1024, RD_SLOW,	    SECT_4K | SST_WP},
+	{"SST25VF064C",	   0xbf254b, 0x0,	 4 * 1024,  2048, RD_EXTN,		     SECT_4K},
+	{"SST25WF512",	   0xbf2501, 0x0,	 4 * 1024,    16, RD_SLOW,	    SECT_4K | SST_WP},
+	{"SST25WF010",	   0xbf2502, 0x0,	 4 * 1024,    32, RD_SLOW,	    SECT_4K | SST_WP},
+	{"SST25WF020",	   0xbf2503, 0x0,	 4 * 1024,    64, RD_SLOW,	    SECT_4K | SST_WP},
+	{"SST25WF040",	   0xbf2504, 0x0,	 4 * 1024,   128, RD_SLOW,	    SECT_4K | SST_WP},
+	{"SST25WF080",	   0xbf2505, 0x0,	 4 * 1024,   256, RD_SLOW,	    SECT_4K | SST_WP},
 #endif
 #ifdef CONFIG_SPI_FLASH_WINBOND		/* WINBOND */
 	{"W25P80",	   0xef2014, 0x0,	64 * 1024,    16,	0,		           0},
