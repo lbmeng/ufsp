@@ -442,6 +442,9 @@ int do_bdinfo(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 #endif
 	printf("baudrate    = %u bps\n", gd->baudrate);
 
+	print_num("relocaddr", gd->relocaddr);
+	print_num("reloc_off", gd->reloc_off);
+
 	return 0;
 }
 
