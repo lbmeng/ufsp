@@ -312,8 +312,21 @@
 
 #define CONFIG_CMD_USB
 
-#define CONFIG_EXTRA_ENV_SETTINGS \
-	CONFIG_STD_DEVICES_SETTINGS
+/* Use the HUSH parser */
+#define CONFIG_SYS_HUSH_PARSER
+#define CONFIG_SYS_PROMPT_HUSH_PS2 "> "
+
+#define CONFIG_LOADADDR	1000000
+#define CONFIG_UBOOTPATH	"u-boot.bin"	/* U-Boot image on TFTP server */
+
+#define CONFIG_EXTRA_ENV_SETTINGS				\
+	CONFIG_STD_DEVICES_SETTINGS				\
+	"uboot=" __stringify(CONFIG_UBOOTPATH) "\0"		\
+	"ubootaddr=100000\0"					\
+	"bootupdate=tftpboot $loadaddr $uboot;"			\
+	"sf probe;"						\
+	"sf erase $ubootaddr +$filesize;"			\
+	"sf write $loadaddr $ubootaddr $filesize"
 
 /* SDHCI */
 #define CONFIG_MMC
