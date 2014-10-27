@@ -17,6 +17,8 @@
 #include <asm/pci.h>
 #include <asm/fsp/fsp_support.h>
 
+DECLARE_GLOBAL_DATA_PTR;
+
 static struct pci_controller tnc_hose;
 
 void pci_init_board(void)
@@ -26,11 +28,13 @@ void pci_init_board(void)
 	tnc_hose.first_busno = 0;
 	tnc_hose.last_busno = 0xff;
 
-	pci_set_region(tnc_hose.regions + 0, CONFIG_SYS_PCI_MEM_BUS, CONFIG_SYS_PCI_MEM_PHYS,
+	pci_set_region(tnc_hose.regions + 0, 0, 0,
+		gd->ram_size, PCI_REGION_MEM | PCI_REGION_SYS_MEMORY);
+	pci_set_region(tnc_hose.regions + 1, CONFIG_SYS_PCI_MEM_BUS, CONFIG_SYS_PCI_MEM_PHYS,
 		CONFIG_SYS_PCI_MEM_SIZE, PCI_REGION_MEM);
-	pci_set_region(tnc_hose.regions + 1, CONFIG_SYS_PCI_IO_BUS, CONFIG_SYS_PCI_IO_PHYS,
+	pci_set_region(tnc_hose.regions + 2, CONFIG_SYS_PCI_IO_BUS, CONFIG_SYS_PCI_IO_PHYS,
 		CONFIG_SYS_PCI_IO_SIZE, PCI_REGION_IO);
-	tnc_hose.region_count = 2;
+	tnc_hose.region_count = 3;
 
 	pci_setup_type1(&tnc_hose);
 
