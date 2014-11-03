@@ -17,8 +17,9 @@
  */
 int cpu_init_f(void)
 {
-	/* set the timer base to something other than 0 */
-	timer_set_base(10);
+#ifdef CONFIG_SYS_X86_TSC_TIMER
+	timer_set_base(rdtsc());
+#endif
 
 	return x86_cpu_init_f();
 }
