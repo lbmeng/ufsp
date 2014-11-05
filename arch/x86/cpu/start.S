@@ -110,7 +110,6 @@ fsp_init_done:
 	/* Reserve space on stack for global data */
 	subl	$GENERATED_GBL_DATA_SIZE, %esp
 
-#ifdef CONFIG_INTEL_FSP
 	/*
 	 * Save ESI/EDI to global data for future reference
 	 * Note they are the last two elements of the gd structure.
@@ -125,6 +124,7 @@ fsp_init_done:
 	movl	$GENERATED_GBL_DATA_SIZE, %ecx
 	call	memset
 	
+#ifdef CONFIG_INTEL_FSP
 	movl	$GD_SIZE, %ecx
 	movl	%edi, -4(%esp, %ecx, 1)
 	movl	%esi, -8(%esp, %ecx, 1)
