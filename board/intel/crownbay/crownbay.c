@@ -44,9 +44,9 @@ int board_eth_init(bd_t *bis)
 	return pci_eth_init(bis);
 }
 
-int board_final_cleanup(void)
+void board_final_cleanup(void)
 {
-	return 0;
+	return;
 }
 
 int last_stage_init(void)

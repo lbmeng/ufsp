@@ -26,13 +26,13 @@ int dram_init_f(void)
 	return 0;
 }
 
-int dram_init_banksize(void)
+void dram_init_banksize(void)
 {
 	if (CONFIG_NR_DRAM_BANKS) {
 		gd->bd->bi_dram[0].start = 0;
 		gd->bd->bi_dram[0].size = CROWNBAY_DRAM_SIZE;
 	}
-	return 0;
+	return;
 }
 
 ulong board_get_usable_ram_top(ulong total_size)
