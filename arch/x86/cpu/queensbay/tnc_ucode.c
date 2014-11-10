@@ -13,5 +13,5 @@
  */
 
 __attribute__ ((section(".ucode"))) unsigned int ucode[] = {
-#include <asm/arch-queensbay/M0220661105.h>
+#include <asm/arch/M0220661105.h>
 };
