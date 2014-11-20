@@ -251,6 +251,7 @@ quiet_cmd_dt_S_dtb= DTB     $@
 cmd_dt_S_dtb=						\
 (							\
 	echo '.section .dtb.init.rodata,"a"';		\
+	echo '.p2align 2';				\
 	echo '.global __dtb_$(*F)_begin';		\
 	echo '__dtb_$(*F)_begin:';			\
 	echo '.incbin "$<" ';				\
