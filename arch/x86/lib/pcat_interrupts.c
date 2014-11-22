@@ -62,6 +62,9 @@ int interrupt_init(void)
 	 */
 	unmask_irq(2);
 
+	/* Initialize core interrupt and exception functionality of CPU */
+	cpu_init_interrupts();
+
 	enable_interrupts();
 
 	return 0;
