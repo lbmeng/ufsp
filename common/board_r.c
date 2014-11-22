@@ -859,7 +859,7 @@ init_fnc_t init_sequence_r[] = {
 	board_early_init_r,
 #endif
 	interrupt_init,
-#if defined(CONFIG_ARM) || defined(CONFIG_x86)
+#if defined(CONFIG_ARM)
 	initr_enable_interrupts,
 #endif
 #ifdef CONFIG_X86
