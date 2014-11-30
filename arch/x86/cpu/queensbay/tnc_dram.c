@@ -51,23 +51,28 @@ ulong board_get_usable_ram_top(ulong total_size)
 
 unsigned install_e820_map(unsigned max_entries, struct e820entry *entries)
 {
-	unsigned num_entries = 4;
+	unsigned num_entries = 0;
 
-	entries[0].addr = 0;
-	entries[0].size = 0xa0000;
-	entries[0].type = E820_RAM;
+	EFI_PEI_HOB_POINTERS hob;
 
-	entries[1].addr = 0xa0000;
-	entries[1].size = 0x60000;
-	entries[1].type = E820_RESERVED;
+	hob.Raw = gd->arch.hob_list;
 
-	entries[2].addr = 0x100000;
-	entries[2].size = 0x3bf00000;
-	entries[2].type = E820_RAM;
+	while (!END_OF_HOB_LIST(hob)) {
+		if (hob.Header->HobType == EFI_HOB_TYPE_RESOURCE_DESCRIPTOR) {
+			if (hob.ResourceDescriptor->ResourceType == EFI_RESOURCE_SYSTEM_MEMORY) {
+				entries[num_entries].addr = hob.ResourceDescriptor->PhysicalStart;
+				entries[num_entries].size = hob.ResourceDescriptor->ResourceLength;
+				entries[num_entries].type = E820_RAM;
+			} else if (hob.ResourceDescriptor->ResourceType == EFI_RESOURCE_MEMORY_RESERVED) {
+				entries[num_entries].addr = hob.ResourceDescriptor->PhysicalStart;
+				entries[num_entries].size = hob.ResourceDescriptor->ResourceLength;
+				entries[num_entries].type = E820_RESERVED;
+			}
 
-	entries[3].addr = 0x3c000000;
-	entries[3].size = 0x4000000;
-	entries[3].type = E820_RESERVED;
+		}
+		hob.Raw = GET_NEXT_HOB(hob);
+		num_entries++;
+	}
 
 	return num_entries;
 }
