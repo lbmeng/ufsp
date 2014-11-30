@@ -15,6 +15,7 @@
 #include <asm/io.h>
 #include <pci.h>
 #include <netdev.h>
+#include <asm/fsp/fsp_support.h>
 
 #define SERIAL_DEV PNP_DEV(0x2e, 4)
 
@@ -46,6 +47,15 @@ int board_eth_init(bd_t *bis)
 
 void board_final_cleanup(void)
 {
+	EFI_STATUS status;
+
+	/* call into FspNotify */
+	printf("Calling into FSP (notify phase EnumInitPhaseReadyToBoot): ");
+	if ((status = FspNotifyWrapper(NULL, EnumInitPhaseReadyToBoot)) != FSP_SUCCESS)
+		printf("fail, error code %x\n", status);
+	else
+		printf("OK\n");
+
 	return;
 }
 
