@@ -15,24 +15,33 @@
 #include <asm/fsp/fsp_support.h>
 #include <asm/e820.h>
 
-#define CROWNBAY_DRAM_SIZE	(1024 * 1024 * 1024)
-
 DECLARE_GLOBAL_DATA_PTR;
 
 int dram_init_f(void)
 {
-	gd->ram_size = CROWNBAY_DRAM_SIZE;
+	phys_size_t ram_size = 0;
+	EFI_PEI_HOB_POINTERS hob;
+
+	hob.Raw = gd->arch.hob_list;
+	while (!END_OF_HOB_LIST(hob)) {
+		if (hob.Header->HobType == EFI_HOB_TYPE_RESOURCE_DESCRIPTOR) {
+			if (hob.ResourceDescriptor->ResourceType == EFI_RESOURCE_SYSTEM_MEMORY ||
+			    hob.ResourceDescriptor->ResourceType == EFI_RESOURCE_MEMORY_RESERVED) {
+				ram_size += hob.ResourceDescriptor->ResourceLength;
+			}
+		}
+		hob.Raw = GET_NEXT_HOB(hob);
+	}
+
+	gd->ram_size = ram_size;
 
 	return 0;
 }
 
 void dram_init_banksize(void)
 {
-	if (CONFIG_NR_DRAM_BANKS) {
-		gd->bd->bi_dram[0].start = 0;
-		gd->bd->bi_dram[0].size = CROWNBAY_DRAM_SIZE;
-	}
-	return;
+	gd->bd->bi_dram[0].start = 0;
+	gd->bd->bi_dram[0].size = gd->ram_size;
 }
 
 ulong board_get_usable_ram_top(ulong total_size)
