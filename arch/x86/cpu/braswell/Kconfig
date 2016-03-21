@@ -1,0 +1,16 @@
+#
+# Copyright (C) 2016, Bin Meng <bmeng.cn@gmail.com>
+#
+# SPDX-License-Identifier:	GPL-2.0+
+#
+
+config INTEL_BRASWELL
+	bool
+	select HAVE_FSP
+
+if INTEL_BRASWELL
+
+config FSP_ADDR
+	default 0xfff20000
+
+endif
