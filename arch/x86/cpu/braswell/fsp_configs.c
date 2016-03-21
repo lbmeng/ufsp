@@ -7,6 +7,8 @@
 #include <common.h>
 #include <asm/fsp/fsp_support.h>
 
+DECLARE_GLOBAL_DATA_PTR;
+
 /* ALC262 Verb Table - 10EC0662 */
 static const u32 verb_table_data[] = {
 	0x00172000,
@@ -125,4 +127,11 @@ void update_fsp_configs(struct fsp_config_data *config,
 
 	fsp_upd->silicon_upd.azalia_cfg_ptr =
 		(struct azalia_config *)&azalia_config;
+
+	/*
+	 * For Braswell B0 stepping, disable_punit_pwr_config must be set to 1
+	 * otherwise it just hangs in fsp_init().
+	 */
+	if (gd->arch.x86_mask == 2)
+		fsp_upd->silicon_upd.disable_punit_pwr_config = 1;
 }
