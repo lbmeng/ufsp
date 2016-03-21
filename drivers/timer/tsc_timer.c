@@ -54,6 +54,8 @@ static struct freq_desc freq_desc_tables[] = {
 	{ 6, 0x37, 1, { FREQ_83, FREQ_100, FREQ_133, FREQ_166, 0, 0, 0, 0 } },
 	/* Ivybridge */
 	{ 6, 0x3a, 2, { 0, 0, 0, 0, 0, 0, 0, 0 } },
+	/* Braswell */
+	{ 6, 0x4c, 2, { 0, 0, 0, 0, 0, 0, 0, 0 } },
 	/* ANN */
 	{ 6, 0x5a, 1, { FREQ_83, FREQ_100, FREQ_133, FREQ_100, 0, 0, 0, 0 } },
 };
