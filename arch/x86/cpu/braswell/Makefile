@@ -5,3 +5,4 @@
 #
 
 obj-y += braswell.o fsp_configs.o
+obj-y += early_uart.o
